@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>דף נכס — ליאון חורסנוב</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{--text:#0b0f14;--soft:#e5e7eb;--pri:#14b8a6}
+  body{margin:0;font-family:Heebo,Arial,sans-serif;color:var(--text);background:#fff;line-height:1.85}
+  a{color:#0e7490;text-decoration:none}
+  .container{max-width:1100px;margin:0 auto;padding:20px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 18px;border-bottom:1px solid var(--soft)}
+  .back{font-weight:800}
+  .title{font-size:28px;font-weight:900;margin:0}
+  .grid{display:grid;gap:16px}
+  @media(min-width:980px){.grid{grid-template-columns:1.2fr .8fr}}
+  .card{background:#fff;border:1px solid var(--soft);border-radius:16px;padding:16px}
+  .hero{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#f3f4f6}
+  .hero img{width:100%;height:100%;object-fit:cover}
+  .kv{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .kv .item{background:#f8fafc;border:1px solid #eef2f7;border-radius:999px;padding:6px 10px;font-weight:800}
+  .btn{display:inline-block;margin-top:10px;padding:12px 14px;border-radius:12px;background:var(--pri);color:#fff;font-weight:900}
+  .btn-outline{background:#fff;color:#0b0f14;border:2px solid #0b0f14}
+  .list{margin:0;padding-inline-start:18px}
+  footer{margin-top:18px;color:#64748b}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <a class="back" href="index.html">← חזרה לעמוד הבית</a>
+    <h1 id="title" class="title">נכס</h1>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <div class="hero"><img id="hero" alt=""></div>
+      <div class="kv" id="kv"></div>
+      <p id="address" style="margin:6px 0 0 0"></p>
+      <div id="features" style="margin-top:8px"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a id="cta-wa" class="btn" target="_blank" rel="noopener">ווטסאפ על הנכס</a>
+        <a id="cta-ext" class="btn btn-outline" target="_blank" rel="noopener" style="display:none">מודעה חיצונית</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 10px">דגשים</h3>
+      <ul class="list" id="bullets">
+        <!-- נמלא אוטומטית מתוך features + עיבוד -->
+      </ul>
+      <h3 style="margin:14px 0 10px">צור קשר</h3>
+      <div>רוצים לראות? השאירו שם וטלפון, חוזר אליכם מהר.</div>
+      <form id="leadForm" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+        <input name="name" required placeholder="שם מלא" />
+        <input name="phone" required type="tel" placeholder="טלפון" />
+        <button class="btn" type="submit">תאמו שיחה</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>© 2025 ליאון חורסנוב</footer>
+</div>
+
+<script src="settings.js?v=200"></script>
+<script>
+  const S = window.SETTINGS || {};
+  const byId = id => (S.LISTINGS||[]).find(x=>x.id===id);
+  const DRIVE = S.DRIVE_IDS||{};
+  const toUc = id => id ? `https://drive.google.com/uc?export=view&id=${id}` : '';
+
+  // קבלת ID מה-URL
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id') || '';
+  const P = byId(id);
+  if(!P){ document.getElementById('title').textContent = 'נכס לא נמצא'; throw new Error('Property not found'); }
+
+  // כותרת + כתובת
+  document.getElementById('title').textContent = P.title || 'נכס';
+  document.getElementById('address').textContent = P.address || '';
+
+  // תמונה
+  const heroImg = document.getElementById('hero');
+  const imageId = DRIVE[P.image] ? DRIVE[P.image] : P.image; // אם הועבר ישירות URL עם id, ננסה לחלץ
+  const realId = (typeof imageId==='string' && imageId.includes('id=')) ? imageId.split('id=').pop() : (DRIVE[P.image] ? P.image : '');
+  heroImg.src = toUc(DRIVE[P.image] ? DRIVE[P.image] : realId || DRIVE.hero);
+
+  // תגים קצרים
+  const kv = document.getElementById('kv');
+  const pills = [P.price, P.rooms, P.size, P.floor].filter(Boolean);
+  kv.innerHTML = pills.map(x=>`<span class="item">${x}</span>`).join('');
+
+  // מאפיינים
+  const feats = (P.features||P.tags||[]).map(x=>`<li>${x}</li>`).join('');
+  document.getElementById('bullets').innerHTML = feats;
+  document.getElementById('features').innerHTML =
+    (P.orientation?`<div><b>כיוונים/נוף:</b> ${P.orientation}</div>`:'') +
+    ((P.neighborhood||P.type)?`<div><b>סוג/אזור:</b> ${[P.type,P.neighborhood].filter(Boolean).join(' • ')}</div>`:'');
+
+  // כפתורי פעולה
+  const txt = encodeURIComponent(`שלום ליאון, מעוניין/ת בנכס: ${P.title} (${P.address}).`);
+  const wa = `https://wa.me/972534234026?text=${txt}`;
+  const waBtn = document.getElementById('cta-wa'); waBtn.href = wa;
+  const ext = document.getElementById('cta-ext');
+  if(P.link){ ext.href = P.link; ext.style.display='inline-block'; }
+
+  // טופס ליד — שליחה למייל + וואטסאפ
+  const EMAIL_TO = 'leonremaxil@gmail.com';
+  function sendMailto(subject, body){
+    const href = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(href,'_blank');
+  }
+  document.getElementById('leadForm').addEventListener('submit', e=>{
+    e.preventDefault();
+    const f = new FormData(e.target);
+    const payload = {
+      'ליד מדף נכס': '',
+      'נכס': P.title || '',
+      'שם': f.get('name')||'',
+      'טלפון': f.get('phone')||''
+    };
+    const q = new URLSearchParams(payload).toString();
+    const msg = decodeURIComponent(q).replace(/&/g, '\n');
+    window.open(wa + '%0A' + encodeURIComponent('\n' + msg),'_blank');
+    sendMailto('Lead – Property: ' + (P.title||''), msg);
+  });
+</script>
+</body>
+</html>

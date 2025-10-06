@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>שכונה — ליאון חורסנוב</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;font-family:Heebo,Arial,sans-serif;color:#0b0f14;background:#fff;line-height:1.85}
+  .container{max-width:1000px;margin:0 auto;padding:24px}
+  a{color:#0e7490;text-decoration:none}
+  header{padding:28px 0;border-bottom:1px solid #e5e7eb;margin-bottom:24px}
+  h1{margin:0;font-size:32px}
+  .badge{display:inline-block;background:#ecfeff;color:#075985;border:1px solid #cffafe;border-radius:999px;padding:6px 10px;font-weight:800;margin:0 6px 6px 0}
+  .grid{display:grid;gap:16px}
+  @media(min-width:820px){.grid{grid-template-columns:1fr 1fr}}
+  .card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:18px}
+  ul{margin:0;padding-inline-start:18px}
+  .btn{display:inline-block;margin-top:10px;padding:10px 14px;border-radius:12px;background:#14b8a6;color:#fff;font-weight:800}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <a href="index.html">← חזרה לעמוד הבית</a>
+    <h1 id="nhTitle">שכונה</h1>
+    <div id="nhBadges"></div>
+  </header>
+
+  <div class="grid">
+    <div class="card">
+      <h3>על השכונה</h3>
+      <div id="nhDesc"></div>
+      <h4 style="margin-top:14px">טווחי מחירים (משוער):</h4>
+      <div id="nhPrices"></div>
+    </div>
+    <div class="card">
+      <h3>רחובות מרכזיים</h3>
+      <div id="nhStreets"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3>נכסים בשכונה</h3>
+    <div id="nhListings"></div>
+  </div>
+
+  <div class="card" style="margin-top:16px;text-align:center">
+    <h3>שוקלים למכור/לקנות בשכונה?</h3>
+    <p>קבלו הערכת שווי ראשונית או שיחת מיקוד קצרה.</p>
+    <a class="btn" href="https://wa.me/972534234026?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%90%D7%95%D7%9F%2C%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9E%D7%99%D7%93%D7%A2%20%D7%A2%D7%9C%20%D7%94%D7%A9%D7%9B%D7%95%D7%A0%D7%94" target="_blank" rel="noopener">ווטסאפ מיידי</a>
+  </div>
+
+  <footer style="margin-top:18px;color:#64748b">© 2025 ליאון חורסנוב</footer>
+</div>
+
+<script src="settings.js?v=100"></script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const name = params.get('name') || 'ברנע';
+  const S = window.SETTINGS || {};
+  const NH = S.NEIGHBORHOODS || {};
+  const data = NH[name];
+
+  if(!data){
+    document.getElementById('nhTitle').textContent = 'שכונה לא נמצאה';
+  }else{
+    document.getElementById('nhTitle').textContent = name;
+    const badges = document.getElementById('nhBadges');
+    badges.innerHTML = `<span class="badge">${data.slug}</span>`;
+
+    document.getElementById('nhDesc').textContent = data.desc || '';
+    const prices = (data.priceBands||[]).map(p=>`<span class="badge">${p.type}: ${p.range}</span>`).join('');
+    document.getElementById('nhPrices').innerHTML = prices;
+
+    document.getElementById('nhStreets').innerHTML = '<ul>'+ (data.streets||[]).map(s=>`<li>${s}</li>`).join('') + '</ul>';
+
+    // נכסים מתוך LISTINGS לפי neighborhood
+    const inN = (S.LISTINGS||[]).filter(x => (x.neighborhood||'').includes(name) || (name==='אגמים' && (x.address||'').includes('אפרסמון')) );
+    const wrap = document.getElementById('nhListings');
+    if(!inN.length){ wrap.innerHTML = 'עוד אין נכסים משויכים לשכונה זו.'; }
+    else{
+      wrap.innerHTML = inN.map(p=>`
+        <div style="display:flex;gap:12px;align-items:center;margin:8px 0;padding:8px;border:1px solid #e5e7eb;border-radius:12px">
+          <div style="width:140px;aspect-ratio:16/9;background:#f3f4f6;border-radius:10px;overflow:hidden">
+            <img src="https://drive.google.com/uc?export=view&id=${S.DRIVE_IDS[p.image]||''}" style="width:100%;height:100%;object-fit:cover">
+          </div>
+          <div style="flex:1">
+            <div style="font-weight:800">${p.title||''}</div>
+            <div style="color:#64748b">${p.address||''}</div>
+            <div style="margin-top:4px">${[p.price,p.rooms,p.size,p.floor].filter(Boolean).join(' • ')}</div>
+          </div>
+          <div><a href="${p.link||'#'}" target="_blank" rel="noopener" style="font-weight:800;color:#0e7490">לפרטים</a></div>
+        </div>
+      `).join('');
+    }
+  }
+</script>
+</body>
+</html>

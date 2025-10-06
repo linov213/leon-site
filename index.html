@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ליאון חורסנוב – מתווך נדל"ן באשקלון | אתר</title>
+  <meta name="description" content="אשקלון — מוכרים נכון, קונים חכם. מי שחוסך עמלה משלם במחיר המכירה. לא פותח דלת — מנהל תהליך. ליאון חורסנוב, RE/MAX Promise אשקלון." />
+  <meta name="theme-color" content="#0b0f14" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#ffffff;--text:#0b0f14;--muted:#64748b;--pri:#14b8a6;--soft:#e5e7eb;--card:#ffffff}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Heebo,Inter,Arial,sans-serif;color:var(--text);line-height:1.75;background:var(--bg)}
+    a{color:inherit}
+    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+    /* Nav */
+    .nav{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--soft);backdrop-filter:saturate(150%) blur(4px)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:900}
+    .brand img{height:28px}
+    .lang{display:flex;gap:6px}
+    .lang a{padding:8px 10px;border-radius:10px;text-decoration:none;font-weight:800;border:1px solid var(--soft)}
+    .lang a.active{background:var(--pri);color:#fff;border-color:transparent}
+    .nav-cta a{display:inline-block;padding:10px 14px;border-radius:12px;background:var(--pri);color:#fff;text-decoration:none;font-weight:800}
+    /* Menu */
+    .menu{list-style:none;display:flex;gap:16px;align-items:center;margin:0;padding:0}
+    .menu>li>a{display:inline-block;padding:8px 10px;border-radius:10px;text-decoration:none;font-weight:800}
+    .menu>li>a:hover{background:#f3f4f6}
+    .dropdown{position:relative}
+    .dropdown-menu{position:absolute;top:120%;right:0;min-width:170px;background:#fff;border:1px solid var(--soft);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:8px 0;display:none;z-index:60}
+    .dropdown-menu li{list-style:none}
+    .dropdown-menu a{display:block;padding:8px 12px;font-weight:700;text-decoration:none}
+    .dropdown-menu a:hover{background:#f9fafb}
+    .dropdown:hover .dropdown-menu{display:block}
+    @media(max-width:920px){.menu{display:none}}
+
+    /* Hero */
+    .hero{min-height:76vh;display:grid;place-items:center;text-align:center;color:#fff;position:relative;overflow:hidden}
+    .hero img.bg{position:absolute;inset:0;width:100%;height:110%;object-fit:cover;filter:brightness(.55);transform:translateY(0) scale(1.1);transition:transform .2s ease-out}
+    .hero .box{position:relative;padding:56px 16px}
+    .hero h1{font-size:40px;margin:0 0 12px;font-weight:900}
+    .hero p{font-size:18px;max-width:860px;margin:0 auto 16px}
+    .hero .punch{font-weight:900}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .badge{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);padding:8px 12px;border-radius:999px;font-weight:700}
+    .hero-cta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .btn{display:inline-block;padding:14px 18px;border-radius:14px;border:0;background:#fff;color:#0b0f14;font-weight:900;text-decoration:none;cursor:pointer}
+    .btn-outline{background:transparent;border:2px solid #fff;color:#fff}
+
+    /* Sections */
+    section{padding:72px 0}
+    h2{font-size:32px;margin:0 0 24px;font-weight:900;text-align:center}
+    .sub{color:var(--muted);text-align:center;margin:-10px 0 28px}
+    .grid{display:grid;gap:16px}
+    @media(min-width:760px){.grid.cols-3{grid-template-columns:repeat(3,1fr)}.grid.cols-2{grid-template-columns:repeat(2,1fr)}}
+    .card{background:var(--card);border:1px solid var(--soft);border-radius:16px;padding:20px;box-shadow:0 8px 28px rgba(0,0,0,.04)}
+    .card h3{margin:0 0 8px;font-size:20px;font-weight:900}
+    ul.list{margin:0;padding:0 0 0 18px}
+
+    /* Properties */
+    .prop{display:flex;flex-direction:column;gap:12px}
+    .imgph{aspect-ratio:16/9;border-radius:12px;background:#e5e7eb;overflow:hidden}
+    .imgph img{width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.02);transition:opacity .5s ease, transform .8s ease}
+    .imgph img.loaded{opacity:1;transform:scale(1)}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:#ecfeff;color:#0e7490;padding:4px 10px;border-radius:999px;font-weight:700;font-size:12px}
+    .price{font-weight:900;color:#111}
+
+    /* CTA + Forms */
+    .cta{background:linear-gradient(90deg,#0b0f14,#111827);color:#fff;text-align:center}
+    form{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
+    input,select,textarea,button{padding:12px 14px;border-radius:12px;border:1px solid var(--soft)}
+    input,select,textarea{width:260px}
+    button{font-weight:900;cursor:pointer;background:var(--pri);color:#fff;border:0}
+
+    /* Footer */
+    footer{padding:28px 16px;text-align:center;color:#64748b}
+
+    /* Float WA */
+    .wa{position:fixed;left:16px;bottom:16px;z-index:60;background:#25D366;color:#fff;border-radius:999px;padding:12px 14px;font-weight:900;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+
+    /* Tabs */
+    .tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px}
+    .tabs button{padding:8px 12px;border-radius:999px;border:1px solid var(--soft);background:#fff;cursor:pointer}
+    .tabs button.active{background:var(--pri);color:#fff;border-color:transparent}
+    .streets{columns:2;gap:20px}
+    @media(max-width:700px){.streets{columns:1}}
+  </style>
+</head>
+<body>
+  <!-- Floating WhatsApp -->
+  <a class="wa" href="https://wa.me/972534234026?text=%D7%94%D7%99%D7%99%20%D7%9C%D7%99%D7%90%D7%95%D7%9F%2C%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A7%D7%91%D7%95%D7%A2%20%D7%99%D7%99%D7%A2%D7%95%D7%A5" target="_blank" rel="noopener">ווטסאפ מיידי</a>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Remax_logo.svg" alt="RE/MAX"/>
+        <span id="brandTxt">ליאון חורסנוב • אשקלון</span>
+      </div>
+
+      <ul class="menu">
+        <li><a href="#listings">נכסים</a></li>
+        <li class="dropdown">
+          <a href="neighborhood.html?name=ברנע">שכונות</a>
+          <ul class="dropdown-menu">
+            <li><a href="neighborhood.html?name=ברנע">ברנע</a></li>
+            <li><a href="neighborhood.html?name=אפרידר">אפרידר</a></li>
+            <li><a href="neighborhood.html?name=אגמים">אגמים</a></li>
+          </ul>
+        </li>
+        <li><a href="about.html">עליי</a></li>
+      </ul>
+
+      <div class="lang">
+        <a class="active" href="#" data-lang="he">HE</a>
+        <a href="#" data-lang="en" hreflang="en" lang="en">EN</a>
+        <a href="#" data-lang="ru" hreflang="ru" lang="ru">RU</a>
+      </div>
+      <div class="nav-cta"><a href="#contact" id="bookCta">קבעו ייעוץ חינם</a></div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero">
+    <img class="bg" id="heroBg" src="" alt="אשקלון – ים ועיר" />
+    <canvas id="hero3d" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:normal;opacity:.85"></canvas>
+    <div class="box container">
+      <h1 id="h1">אשקלון — מוכרים נכון, קונים חכם.</h1>
+      <p class="punch" id="punch">מי שחוסך עמלה — משלם במחיר המכירה. לא פותח דלת — מנהל תהליך.</p>
+      <p id="heroSub">בלעדיות מדויקת • שיווק דיגיטלי ממיר • מו"מ קשוח והוגן • טיפול מלא עד חוזה.</p>
+      <div class="badges">
+        <div class="badge" id="b1">Lead-First Website</div>
+        <div class="badge" id="b2">Video + Performance</div>
+        <div class="badge" id="b3">HE • RU • EN</div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn" href="#valuation" id="cta1">הערכת שווי לדירה</a>
+        <a class="btn btn-outline" href="#listings" id="cta2">נכסים נבחרים</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container">
+      <h2 id="srvH">השירותים שלי</h2>
+      <p class="sub" id="srvSub">מכירה בבלעדיות • ליווי קונים • שיווק דיגיטלי לנכסים</p>
+      <div class="grid cols-3">
+        <div class="card"><h3 id="s1">מכירת נכסים בבלעדיות</h3><ul class="list"><li id="s1a">תמחור נתונים (מדלן/נדל"ן.גוב)</li><li id="s1b">צילום/וידאו + קמפיינים ממומנים</li><li id="s1c">סינון קונים ותיאומים מרוכזים</li></ul></div>
+        <div class="card"><h3 id="s2">ליווי קונים</h3><ul class="list"><li id="s2a">איתור נכסים רלוונטיים (כולל מלאי המשרד)</li><li id="s2b">בדיקות עומק ומו"מ ממוקד תוצאה</li><li id="s2c">ליווי עד מסירה ותיאום משפטי</li></ul></div>
+        <div class="card"><h3 id="s3">שיווק דיגיטלי מתקדם</h3><ul class="list"><li id="s3a">וואטסאפ, מייל ו-CRM</li><li id="s3b">רימרקטינג + תוכן סמכותי</li><li id="s3c">דוחות ביצועים ושיפור מתמיד</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured properties -->
+  <section id="listings" style="background:#fafafa">
+    <div class="container">
+      <h2 id="lstH">נכסים נבחרים</h2>
+      <p class="sub" id="lstSub">אפרסמון • דרך היין • משה שרת (ועוד). נעדכן נתונים מדויקים בהמשך.</p>
+      <div id="props" class="grid cols-3"></div>
+      <div style="text-align:center;margin-top:16px">
+        <a class="btn" id="allListings" href="https://www.remax-israel.com/he-il/%D7%9E%D7%AA%D7%95%D7%95%D7%9B%D7%99%D7%9D/%D7%99%D7%A8%D7%95%D7%A9%D7%9C%D7%99%D7%9D-%D7%95%D7%93%D7%A8%D7%95%D7%9D/%D7%90%D7%A9%D7%A7%D7%9C%D7%95%D7%9F/leon-hursanov-%D7%9C%D7%99%D7%90%D7%95%D7%9F-%D7%97%D7%95%D7%A8%D7%A1%D7%A0%D7%95%D7%91/52021020#myProperties" target="_blank" rel="noopener">כל הדירות של המשרד</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neighborhoods -->
+  <section id="areas">
+    <div class="container">
+      <h2 id="nhH">שכונות באשקלון</h2>
+      <p class="sub" id="nhSub">טווחי מחירים גסים להכוונה בלבד – נחדד יחד לפי נתוני מדלן.</p>
+      <div class="tabs" id="nhTabs"></div>
+      <div id="nhContent" class="card"></div>
+    </div>
+  </section>
+
+  <!-- Valuation CTA -->
+  <section id="valuation" class="cta">
+    <div class="container">
+      <h2 id="valH">כמה שווה הדירה שלך היום?</h2>
+      <p class="sub" id="valSub" style="color:#cbd5e1">קבלו הערכת מחיר ראשונית בחינם + שיחת מיקוד קצרה.</p>
+      <form id="valForm">
+        <input name="name" required placeholder="שם מלא" />
+        <input name="phone" required type="tel" placeholder="טלפון" />
+        <input name="address" placeholder="כתובת הנכס" />
+        <select name="reason"><option value="מכירה">מכירה</option><option value="קנייה">קנייה</option><option value="התעניינות כללית">התעניינות כללית</option></select>
+        <button type="submit" id="valBtn">שלחו וקבלו הערכה</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials">
+    <div class="container">
+      <h2 id="tsH">מה אומרים הלקוחות</h2>
+      <div class="grid cols-3">
+        <div class="card">“מכרנו מעל הציפיות ובזמן קצר. ליאון היה חד, מדויק ושקוף לאורך כל הדרך.” — משפחת ג׳, ברנע</div>
+        <div class="card">“לידים אמיתיים בלבד. תיאומים מסודרים וסגירה נקייה. ממליץ בחום.” — א׳, אגמים</div>
+        <div class="card">“ניהל מו\"מ קשוח והוגן שהביא אותנו למחיר שרצינו. שירות מצוין.” — ש׳, אפרידר</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="cta">
+    <div class="container">
+      <h2 id="ctH">צור קשר</h2>
+      <p class="sub" id="ctSub" style="color:#cbd5e1">השאירו פרטים לשיחה קצרה – חוזר אליכם במהירות.</p>
+      <form id="contactForm">
+        <input name="name" required placeholder="שם מלא" />
+        <input name="phone" required type="tel" placeholder="טלפון" />
+        <input name="email" type="email" placeholder="אימייל (אופציונלי)" />
+        <textarea name="msg" rows="3" placeholder="מה חשוב לכם?"></textarea>
+        <button type="submit" id="ctBtn">דברו איתי</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div>© 2025 ליאון חורסנוב | RE/MAX Promise אשקלון • רישיון תיווך: 3243913 • טל: 053-4234026</div>
+    <div style="margin-top:6px">
+      <a href="https://share.google/8pPJc0jJ3K0V8Yo4C" target="_blank" rel="noopener">Google Business</a> •
+      <a href="https://www.facebook.com/leon.hursanov" target="_blank" rel="noopener">Facebook</a> •
+      <a href="https://www.instagram.com/leon_hursanov/" target="_blank" rel="noopener">Instagram</a> •
+      <a href="https://www.linkedin.com/in/leonhursanov/" target="_blank" rel="noopener">LinkedIn</a> •
+      <a href="https://www.tiktok.com/@leonhursanov" target="_blank" rel="noopener">TikTok</a> •
+      <a href="https://www.youtube.com/@leonremaxashkeoln" target="_blank" rel="noopener">YouTube</a>
+    </div>
+  </footer>
+
+  <!-- settings.js (חייב באותה תיקייה) -->
+  <script src="settings.js?v=600" onerror="window.__SETTINGS_LOAD_ERROR=true"></script>
+
+  <script>
+    /* ====== Fallback אם settings.js לא נטען / ריק ====== */
+    (function ensureSettings(){
+      const bad = !window.SETTINGS || !Array.isArray(window.SETTINGS.LISTINGS) || window.SETTINGS.LISTINGS.length===0;
+      if(!bad) return;
+
+      console.warn('Using fallback SETTINGS. LoadError =', !!window.__SETTINGS_LOAD_ERROR);
+      window.SETTINGS = {
+        DRIVE_IDS: {
+          hero: '17e0lF5Us8mlqlWumbuossOROJVtkBYpz',
+          afarsmon: '1OOfMGhUyUSHkjom__PYJ_HTu_dELyEGA',
+          yafeNof: '16dmB6rM3H99EFgm4R0rTD0xRITPkREyF',
+          mosheSharet: '1NoAIRqCqrj5B0U8JnYUfNRLJJK9Pt4qc'
+        },
+        LISTINGS: [
+          { id:'afarsmon-25', title:'אשכולי פז – קוטג׳ למכירה', address:'אשכולי פז, אשקלון', neighborhood:'אשכולי פז', status:'למכירה', type:'קוטג׳', price:'₪ 2,690,000', rooms:'5.5', size:'127 מ"ר בנוי • מגרש 200 מ"ר', floor:'3 קומות', orientation:'שקט • קרוב לים', features:['גינה','מרפסת','מרפסת שמש','מחסן','דוד שמש','מרוהט','מ״א מרכזי','חניה 1 במגרש','שפע חניה ברחוב','מרתף'], image:'afarsmon', gallery:['afarsmon'], link:'https://www.remax-israel.com/he-il/%D7%93%D7%99%D7%A8%D7%95%D7%AA/%D7%A7%D7%95%D7%98%D7%92/%D7%9E%D7%9B%D7%99%D7%A8%D7%94/%D7%90%D7%A9%D7%A7%D7%9C%D7%95%D7%9F/52021020-14' },
+          { id:'yafe-nof', title:'יפה נוף – דירה להשכרה', address:'יפה נוף, אשקלון', neighborhood:'טיילת/מרינה', status:'להשכרה', type:'דירה', price:'₪ 6,800 לחודש', rooms:'4', size:'120 מ"ר', floor:'קומה 13 • 3 מעליות', orientation:'נוף ים מכל חדר • מרפסת פנורמית לים', features:['מרפסת','נוף ים פנורמי','3 מעליות'], image:'yafeNof', gallery:['yafeNof'], link:'https://www.remax-israel.com/he-il/%D7%93%D7%99%D7%A8%D7%95%D7%AA/%D7%93%D7%99%D7%A8%D7%94/%D7%94%D7%A9%D7%9B%D7%A8%D7%94/%D7%90%D7%A9%D7%A7%D7%9C%D7%95%D7%9F/52021020-12' },
+          { id:'moshe-sharet-42', title:'ברנע – משה שרת 42', address:'משה שרת 42, אשקלון', neighborhood:'ברנע', status:'למכירה', type:'דירה', price:'₪ 1,470,000', rooms:'4 (3 ש״ש)', size:'101 מ"ר (כ-85 מ״ר מצוין בתיאור) + 2 מרפסות', floor:'8 מתוך 9 • בניין 1995', orientation:'צפון/מערב • נוף פתוח', features:['מעלית','חניה פרטית','ממ״ד','מרפסת שמש','נגיש'], image:'mosheSharet', gallery:['mosheSharet'], link:'https://www.remax-israel.com/he-il/%D7%93%D7%99%D7%A8%D7%95%D7%AA/%D7%93%D7%99%D7%A8%D7%94/%D7%9E%D7%9B%D7%99%D7%A8%D7%94/%D7%90%D7%A9%D7%A7%D7%9C%D7%95%D7%9F/%D7%9E%D7%A9%D7%94-%D7%A9%D7%A8%D7%AA-42-%D7%90%D7%A9%D7%A7%D7%9C%D7%95%D7%9F/52021020-10' }
+        ]
+      };
+    })();
+
+    /* ===== Utils: IDs/URLs + safe image load ===== */
+    const SETTINGS = window.SETTINGS || {};
+    const DRIVE_IDS = SETTINGS.DRIVE_IDS || {};
+    const idToUc = (id)=> id ? `https://drive.google.com/uc?export=view&id=${id}` : '';
+    const idToLh3 = (id)=> id ? `https://lh3.googleusercontent.com/d/${id}=w1600` : '';
+    function keyOrIdToUrl(keyOrId){
+      if(!keyOrId) return '';
+      if(/^https?:/.test(keyOrId)) return keyOrId;            // כבר URL
+      const id = DRIVE_IDS[keyOrId] || keyOrId;               // מפתח -> ID, או שכבר ID
+      return idToUc(id);
+    }
+    function safeSetImg(imgEl, url, fallback){
+      const fb = fallback || 'https://picsum.photos/1200/675';
+      if(!url){ imgEl.src = fb; imgEl.classList.add('loaded'); return; }
+      const probe = new Image();
+      probe.onload = ()=>{ imgEl.src = url; imgEl.classList.add('loaded'); };
+      probe.onerror = ()=>{
+        // נסה פורמט LH3, ואם לא – פולבאק
+        const id = (url.split('id=').pop()||'').split('&')[0];
+        const alt = idToLh3(id);
+        const probe2 = new Image();
+        probe2.onload = ()=>{ imgEl.src = alt; imgEl.classList.add('loaded'); };
+        probe2.onerror = ()=>{ imgEl.src = fb; imgEl.classList.add('loaded'); };
+        probe2.src = alt;
+      };
+      probe.src = url;
+    }
+
+    /* ===== Language ===== */
+    const I18N = {
+      he: {brand:'ליאון חורסנוב • אשקלון', book:'קבעו ייעוץ חינם', h1:'אשקלון — מוכרים נכון, קונים חכם.', punch:'מי שחוסך עמלה — משלם במחיר המכירה. לא פותח דלת — מנהל תהליך.', heroSub:'בלעדיות מדויקת • שיווק דיגיטלי ממיר • מו\"מ קשוח והוגן • טיפול מלא עד חוזה.', b1:'Lead-First Website', b2:'Video + Performance', b3:'HE • RU • EN', srvH:'השירותים שלי', srvSub:'מכירה בבלעדיות • ליווי קונים • שיווק דיגיטלי לנכסים', lstH:'נכסים נבחרים', lstSub:'אפרסמון • דרך היין • משה שרת (ועוד).', nhH:'שכונות באשקלון', nhSub:'טווחי מחירים גסים להכוונה בלבד – נחדד יחד לפי נתוני מדלן.', valH:'כמה שווה הדירה שלך היום?', valSub:'קבלו הערכת מחיר ראשונית בחינם + שיחת מיקוד קצרה.', valBtn:'שלחו וקבלו הערכה', tsH:'מה אומרים הלקוחות', ctH:'צור קשר', ctSub:'השאירו פרטים לשיחה קצרה – חוזר אליכם במהירות.', ctBtn:'דברו איתי'},
+      en: {brand:'Leon Hursanov • Ashkelon', book:'Book a free consult', h1:'Ashkelon — Sell smart. Buy right.', punch:"If you 'save' broker fee, you pay at the sale price. I don't just open doors — I run the process.", heroSub:'Sharp exclusivity • Performance marketing • Skilled negotiation • Full guidance to contract.', b1:'Lead-First Website', b2:'Video + Performance', b3:'HE • RU • EN', srvH:'Services', srvSub:'Exclusive Sales • Buyer Representation • Digital Marketing', lstH:'Featured Listings', lstSub:'Afarsmon • Derech HaYayin • Moshe Sharett (and more).', nhH:'Ashkelon Neighborhoods', nhSub:'Rough price bands (to be refined).', valH:'What’s your home worth today?', valSub:'Free initial valuation + short focus call.', valBtn:'Send & Get Valuation', tsH:'Client Reviews', ctH:'Contact', ctSub:'Leave details for a quick call-back.', ctBtn:'Talk to me'},
+      ru: {brand:'Леон Хурсанов • Ашкелон', book:'Бесплатная консультация', h1:'Ашкелон — Продаем правильно, покупаем разумно.', punch:'Кто «экономит» на комиссии — теряет на цене продажи. Я не просто открываю двери — я веду процесс.', heroSub:'Точная эксклюзивность • Цифровой маркетинг • Переговоры • Сопровождение до договора.', b1:'Lead-First Website', b2:'Видео + Performance', b3:'HE • RU • EN', srvH:'Услуги', srvSub:'Продажа эксклюзив • Покупателям • Цифровой маркетинг', lstH:'Избранные объекты', lstSub:'Афарсмóн • Дерех а-Яйн • Моше Шерет.', nhH:'Районы Ашкелона', nhSub:'Примерные ценовые диапазоны (уточним).', valH:'Сколько стоит ваша квартира сегодня?', valSub:'Бесплатная оценка + короткий созвон.', valBtn:'Отправить', tsH:'Отзывы клиентов', ctH:'Связаться', ctSub:'Оставьте детали — я перезвоню.', ctBtn:'Связаться'}
+    };
+    const $ = s=>document.querySelector(s);
+    const $$ = s=>Array.from(document.querySelectorAll(s));
+    function bindLang(){
+      $$('.lang a').forEach(a=>{
+        a.addEventListener('click', e=>{e.preventDefault(); setLang(a.dataset.lang);});
+      });
+    }
+    function setLang(code){
+      const t = I18N[code]||I18N.he;
+      $('#brandTxt').textContent=t.brand; $('#bookCta').textContent=t.book;
+      $('#h1').textContent=t.h1; $('#punch').textContent=t.punch; $('#heroSub').textContent=t.heroSub;
+      $('#b1').textContent=t.b1; $('#b2').textContent=t.b2; $('#b3').textContent=t.b3;
+      $('#srvH').textContent=t.srvH; $('#srvSub').textContent=t.srvSub;
+      $('#lstH').textContent=t.lstH; $('#lstSub').textContent=t.lstSub;
+      $('#nhH').textContent=t.nhH; $('#nhSub').textContent=t.nhSub;
+      $('#valH').textContent=t.valH; $('#valSub').textContent=t.valSub; $('#valBtn').textContent=t.valBtn;
+      $('#tsH').textContent=t.tsH; $('#ctH').textContent=t.ctH; $('#ctSub').textContent=t.ctSub; $('#ctBtn').textContent=t.ctBtn;
+      $$('.lang a').forEach(a=>a.classList.toggle('active', a.dataset.lang===code));
+      document.documentElement.lang = code==='he'?'he':code;
+      document.documentElement.dir = code==='he'?'rtl':'ltr';
+    }
+
+    /* ===== Neighborhoods (static text for now) ===== */
+    const NEIGHBORHOODS = {
+      'ברנע': { desc: 'קו ראשון לים, דירות מרווחות ופנטהאוזים.', prices: '3ח: ₪1.35–1.65מ׳ • 4ח: ₪1.55–1.95מ׳ • 5ח: ₪1.9–2.6מ׳', streets: ['הציונות','דרך הים','התמר','הדקל','החבצלת','דרך היין','שדרות מלכי ישראל'] },
+      'אפרידר': { desc: 'ותיקה ומבוקשת, קרובה לשירותים קהילתיים.', prices: '3ח: ₪1.05–1.30מ׳ • 4ח: ₪1.25–1.60מ׳ • 5ח: ₪1.55–2.1מ׳', streets: ['משה שרת','יורם ורון','השייטת','הטייסים','הנוקדים','הנרי רונסון'] },
+      'אגמים': { desc: 'בנייה חדשה, מודרנית ותשואה משכירות.', prices: '3ח: ₪1.25–1.55מ׳ • 4ח: ₪1.45–1.85מ׳ • 5ח: ₪1.8–2.4מ׳', streets: ['אפרסמון','ארבל','תבור','חרמון','מוריה','הרי אפרים'] }
+    };
+    function renderNeighborhoods(){
+      const tabs = $('#nhTabs'); const content = $('#nhContent');
+      tabs.innerHTML='';
+      Object.keys(NEIGHBORHOODS).forEach((name,i)=>{
+        const b = document.createElement('button');
+        b.textContent=name; if(i===0)b.classList.add('active');
+        b.onclick=()=>{
+          $$('.tabs button').forEach(x=>x.classList.remove('active'));
+          b.classList.add('active');
+          const n = NEIGHBORHOODS[name];
+          content.innerHTML = `
+            <h3 style="margin:0 0 8px">${name}</h3>
+            <div>${n.desc}</div>
+            <div style="margin:8px 0;color:#0e7490;font-weight:800">${n.prices}</div>
+            <div class="streets">${n.streets.map(s=>`<div>• ${s}</div>`).join('')}</div>`;
+        };
+        tabs.appendChild(b);
+      });
+      tabs.querySelector('button').click();
+    }
+
+    /* ===== Forms: WhatsApp + Mail ===== */
+    const EMAIL_TO = 'leonremaxil@gmail.com';
+    function toWA(params){
+      const q = new URLSearchParams(params).toString();
+      const txt = decodeURIComponent(q).replace(/&/g, '\n');
+      window.open('https://wa.me/972534234026?text='+encodeURIComponent(txt),'_blank');
+    }
+    function sendMailto(subject, body){
+      const href = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.open(href,'_blank');
+    }
+
+    /* ===== Images: hero + cards ===== */
+    async function setHero(){
+      const heroImg = $('#heroBg');
+      const heroUrl = keyOrIdToUrl('hero');
+      const fallback = 'https://images.unsplash.com/photo-1560472355-536de3962603?q=80&w=1600&auto=format&fit=crop';
+      safeSetImg(heroImg, heroUrl, fallback);
+
+      // Parallax
+      const onScroll = ()=>{ const y = window.scrollY||0; heroImg.style.transform = `translateY(${y*0.12}px) scale(1.1)`; };
+      window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+    }
+
+    function listingsFromSettings(){
+      const L = (SETTINGS.LISTINGS||[]).map(p=>{
+        const url = keyOrIdToUrl(p.image);
+        return {...p, _imageUrl:url};
+      });
+      return L;
+    }
+
+    function renderListings(){
+      const wrap = $('#props'); wrap.innerHTML = '';
+      const list = listingsFromSettings();
+      if(!list.length){ wrap.innerHTML = '<div class="card">אין נכסים להצגה כרגע.</div>'; return; }
+
+      list.forEach(p=>{
+        const el = document.createElement('div'); el.className='card prop';
+        el.innerHTML = `
+          <div class="imgph"><img loading="lazy" alt="${p.title||''}"/></div>
+          <div class="tags">${(p.features||p.tags||[]).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+          <b class="price">${p.price||''}</b>
+          <div>${p.address||''}${p.size?` • ${p.size}`:''}${p.floor?` • ${p.floor}`:''}</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <a class="btn" href="property.html?id=${encodeURIComponent(p.id||'')}" rel="noopener">דף נכס</a>
+            ${p.link?`<a class="btn btn-outline" href="${p.link}" target="_blank" rel="noopener">מודעה חיצונית</a>`:''}
+          </div>`;
+        const imgEl = el.querySelector('img');
+        safeSetImg(imgEl, p._imageUrl);
+        wrap.appendChild(el);
+      });
+    }
+
+    /* ===== 3D (fallback גרפי בטוח) ===== */
+    (function threeFallback(){
+      const canvas = document.getElementById('hero3d'); if(!canvas) return;
+      const load = async()=>{
+        try{
+          const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+          const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+          const scene = new THREE.Scene();
+          const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 100); camera.position.set(0,1.2,3.2);
+          scene.add(new THREE.AmbientLight(0xffffff, 0.9));
+          const dir = new THREE.DirectionalLight(0xffffff, 0.8); dir.position.set(2,3,4); scene.add(dir);
+          const resize=()=>{const w=canvas.clientWidth,h=canvas.clientHeight||1;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();};
+          window.addEventListener('resize', resize);
+          const body = new THREE.Mesh(new THREE.BoxGeometry(1,0.8,1), new THREE.MeshStandardMaterial({color:0x14b8a6, metalness:0.2, roughness:0.3}));
+          const roof = new THREE.Mesh(new THREE.ConeGeometry(0.8,0.5,4), new THREE.MeshStandardMaterial({color:0x0e7490, metalness:0.2, roughness:0.4}));
+          roof.position.y = 0.65; roof.rotation.y = Math.PI/4;
+          const root = new THREE.Group(); root.add(body); root.add(roof); root.position.y = -0.1; scene.add(root);
+          const onScroll=()=>{const t=Math.min(1,(window.scrollY||0)/(window.innerHeight*1.2));root.rotation.y=t*Math.PI*2;root.rotation.x=0.15*Math.sin(t*Math.PI*2);};
+          window.addEventListener('scroll', onScroll, {passive:true});
+          (function animate(){ requestAnimationFrame(animate); renderer.render(scene,camera); })();
+          resize(); onScroll();
+        }catch(e){/* מתעלמים אם WebGL חסום */}
+      };
+      load();
+    })();
+
+    /* ===== Bind forms ===== */
+    document.addEventListener('submit', e=>{
+      const id=e.target.id;
+      if(id==='valForm' || id==='contactForm'){
+        e.preventDefault();
+        const f=new FormData(e.target);
+        const base = (id==='valForm') ?
+          {'בקשת הערכת שווי':'','שם':f.get('name')||'','טלפון':f.get('phone')||'','כתובת/נכס':f.get('address')||'','סיבה':f.get('reason')||''} :
+          {'פנייה מהאתר':'','שם':f.get('name')||'','טלפון':f.get('phone')||'','אימייל':f.get('email')||'','הודעה':f.get('msg')||''};
+        const q = new URLSearchParams(base).toString();
+        const msg = decodeURIComponent(q).replace(/&/g, '\n');
+        toWA(base); sendMailto(id==='valForm'?'Lead – Valuation':'Lead – Contact', msg);
+      }
+    });
+
+    /* ===== Init ===== */
+    (function init(){
+      bindLang(); setLang('he');
+      setHero();
+      renderListings();
+      renderNeighborhoods();
+    })();
+  </script>
+</body>
+</html>
